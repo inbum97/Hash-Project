@@ -1,4 +1,4 @@
-﻿#ifndef Hash_H
+#ifndef Hash_H
 #define Hash_H
 #include <list>
 using namespace std;
@@ -30,6 +30,12 @@ void Hash::displayHash() {
 		cout << endl;
 	}
 }
+
+/****************************************************
+ hashFunction: This reads each characters from string
+  and add up each of ascii value and modulo the size 
+  of the hash and return that value
+  **************************************************/
 template <class T>
 int Hash::hashFunction(string uniKey) {
 	int sum = 0;
@@ -40,7 +46,7 @@ int Hash::hashFunction(string uniKey) {
 	return (sum%numBucket);
 }
 
-//Constructor
+//Overloaded Constructor
 template<class T>
 Hash::Hash(int b) {
 	this->bucketNum = b;
@@ -48,7 +54,7 @@ Hash::Hash(int b) {
 	cout << "Hash array of " << b << " number of index created\n";
 }
 
-
+//Inserting an item into the hash table
 template<class T>
 bool Hash::insertItem(T * armor) {
 	int index = hashFunction(armor->getUnikey());
