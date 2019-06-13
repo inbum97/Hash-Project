@@ -34,7 +34,7 @@ public:
 	int getCount() { return count; }
 
 	//Destructor
-	//~List();
+	~List();
 };
 
 
@@ -176,29 +176,29 @@ bool List::searchListP(string target, armor *dataOut)
 // Destructor                                      *
 // This function deletes every node in the list.   *
 //**************************************************
-//List::~List()
-//{
-//	ListNode *pCur;   // To traverse the list
-//	ListNode *pNext;  // To point to the next node
-//
-//					  // Position nodePtr at the head of the list.
-//	pCur = head->next;
-//
-//	// While pCur is not at the end of the list...
-//	while (pCur != NULL)
-//	{
-//		// Save a pointer to the next node.
-//		pNext = pCur->next;
-//
-//		// Delete the current node.
-//		cout << "DEBUG - Destructor: Now deleting " << pCur->A->getName() << endl;
-//		delete pCur;
-//
-//		// Position pCur at the next node.
-//		pCur = pNext;
-//	}
-//	cout << "DEBUG - Destructor: Now deleting the sentinel node rank " << head->A->getRank() << endl;
-//	delete head; // delete the sentinel node
-//}
+List::~List()
+{
+	ListNode *pCur;   // To traverse the list
+	ListNode *pNext;  // To point to the next node
+
+					  // Position nodePtr at the head of the list.
+	pCur = head->next;
+
+	// While pCur is not at the end of the list...
+	while (pCur != NULL)
+	{
+		// Save a pointer to the next node.
+		pNext = pCur->next;
+
+		// Delete the current node.
+		cout << "DEBUG - Destructor: Now deleting " << pCur->A->getName() << endl;
+		delete pCur;
+
+		// Position pCur at the next node.
+		pCur = pNext;
+	}
+	//cout << "DEBUG - Destructor: Now deleting the sentinel node rank " << head->A->getRank() << endl;
+	delete head; // delete the sentinel node
+}
 
 #endif 
