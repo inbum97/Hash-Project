@@ -1,82 +1,118 @@
 #ifndef Hash_H
 #define Hash_H
-#include <list>
+#include <iostream>
+#include "List.h"
+//#include <list>
 using namespace std;
-template<class T>
+
 class Hash {
 private:
 	//number of buckets
 	int numBucket;
-	list<T> *table;
-	//string unikey = "Sneaky";
+	List *table;
+	int collision;
+	double LF;
 public:
 	//constructor
 	Hash();
 	//overloaded constructor
 	Hash(int);
 	//basic hash functions
-	bool insertItem(T *armor);
-	bool deleteItem(T target);
+	bool insertItem(armor *A);
+	bool deleteItem(string target);
 	int hashFunction(string unikey);
 	void displayHash();
+	bool searchByP(string uniKey);
+	void stat();
+	//setter
+	void setCol(int a) { collision = a; }
+	void setLF(double a) { LF = a; }
+	//getter
+	int getCol() { return collision; }
+	double getLF() { return LF; }
 };
 
-template <class T>
-void Hash::displayHash() {
+void Hash::stat() {
+	int collision=0;
+	double loadFactor = 0.0;
 	for (int i = 0; i < numBucket; i++) {
-		cout << i;
-		for (auto x : table[i])
-			cout << "--> " << x;
-		cout << endl;
+		if (table[i].getCount() > 1) {
+			collision += table[i].getCount()-1;
+		}
 	}
+	setCol(collision);
+	cout << "Collision: " << collision<<endl;
+	loadFactor = ((numBucket - collision)/ numBucket)*100;
+	setLF(loadFactor);
+	cout <<"Load Facotr " << loadFactor;
+
 }
+
+bool Hash::searchByP(string uniKey) {
+	bool found = false;
+	int index = hashFunction(uniKey);
+	armor *a= new armor;
+	cout << "printing search result ";
+
+	if (table[index].searchListP(uniKey, a)) {
+		found = true;
+		cout << a->getUnikey() << endl;
+
+	}
+	return found;
+}
+//void Hash::displayHash() {
+//	for (int i = 0; i < numBucket; i++) {
+//		cout << i;
+//		for (auto x : table[i])
+//			cout << "--> " << x;
+//		cout << endl;
+//	}
+//}
 
 /****************************************************
  hashFunction: This reads each characters from string
   and add up each of ascii value and modulo the size 
   of the hash and return that value
   **************************************************/
-template <class T>
 int Hash::hashFunction(string uniKey) {
 	int sum = 0;
-	for (int i = 0; i < uniKey.size(); i++) {
+	int len = uniKey.size();
+	for (int i = 0; i <len ; i++) {
 		sum += uniKey[i];
 	}
-	cout<<"Bucket number: " << sum % numBucket<<endl;
-	return (sum%numBucket);
+	int key = sum % numBucket;
+	cout << "Key: " << sum<<endl;
+	cout<<"Bucket number: " <<key<<endl;
+	return key;
 }
 
 //Overloaded Constructor
-template<class T>
 Hash::Hash(int b) {
-	this->bucketNum = b;
-	table = new list<T>[bucketNum];
+	this->numBucket = b;
+	table = new List[numBucket];
 	cout << "Hash array of " << b << " number of index created\n";
 }
 
 //Inserting an item into the hash table
-template<class T>
-bool Hash::insertItem(T * armor) {
-	int index = hashFunction(armor->getUnikey());
-	table[index].push_back(armor);
-	cout << "armor->getName has been inserted\n";
+bool Hash::insertItem(armor *A) {
+	bool found = false;
+	int index = hashFunction(A->getUnikey());
+	if (table[index].insertNode(A)) {
+		found = true;
+		cout << A->getName() << " has been inserted\n";
+	}
+	return found;
 }
 
 //what should be the parameter
-template<class T>
-bool Hash::deleteItem(T target) {
-	int index = hashFunction(target->getUnikey());
-	list<T>::iterator i;
-	//finding the key in xth list
-	for (i = table[index].begin(); i != table[index].end(); i++) {
-		if (*i == key)
-			break;
+bool Hash::deleteItem(string target) {
+	bool found = false;
+	int index = hashFunction(target);
+	if (table[index].deleteNode(target)) {
+		found = true;
 	}
-	//if found, remove
-	if (i != table[index].end()) {
-		table[index].erase[i];
-		cout << "Target.getName has been removed\n";
-	}
+	return found;
 }
 
 
