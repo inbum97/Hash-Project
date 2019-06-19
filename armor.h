@@ -85,8 +85,8 @@ public:
 
 };
 istream& getline(istream& in, Armors* armor) {
-	cout << "Enter the Codename: ";
-	getline(in, armor->codename);
+	//cout << "Enter the Codename: ";
+	//getline(in, armor->codename);
 	cout << "\nEnter the armor type: ";
 	getline(in, armor->armorType);
 	cout << "\nEnter the creater: ";

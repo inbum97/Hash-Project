@@ -36,12 +36,13 @@ int main() {
 	H.deleteItem(del);
 	H.stat();*/
 	string fileName = "armors.txt";
-	Hash H(20);
+	Hash H(79);
 	fileInput(fileName, H);
 	H.stat();
 	insertHashManager(H);
 	searchHashManager(H,display);
 	deleteHashManager(H);
+	H.printHash(display);
 	return 0;
 }
 
@@ -66,6 +67,7 @@ void insertHashManager(Hash &H) {
 				cout << "Armor " << targetName << " is already in this Hash Table.";
 			else {
 				cout << "Enter the information of the Armor" << endl;
+				A->setCodeName(targetName);
 				getline(cin, A);
 				if (H.insertItem(A))
 					cout << "\nInserted" << endl;

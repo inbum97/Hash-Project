@@ -29,8 +29,8 @@ public:
 	bool insertNode(Armors *);
 	bool deleteNode(string);
 	bool searchListP(Armors *, Armors *&);
-	bool searchListS(string, Armors *);
-	void displayList() const;
+	bool searchListS(Armors *, Armors *);
+	void displayList(void visit(Armors *)) const;
 	int getCount() { return count; }
 
 	//Destructor
@@ -157,26 +157,23 @@ bool List::searchListP(Armors* target, Armors *&dataOut)
 // Display function shows every college name with their rank and cost.
 //**************************************************
 
-//void List::displayList() const
-//{
-//	ListNode *pCur;  // To move through the list
-//
-//					 // print header
-//	cout << endl
-//		<< "==== ============================= ========= ==========" << endl
-//		<< "Rank          Name                    Cost      NoStu  " << endl
-//		<< "==== ============================= ========= ==========" << endl;
-//
-//	pCur = head->next;          // Position pCur: skip the head of the list.
-//	while (pCur != NULL)
-//	{
-//		pCur->col.display();  //Display the value in the node.
-//		pCur = pCur->next;    //Move to the next node.
-//
-//	}
-//	cout
-//		<< "==== ============================= ========= ==========" << endl;
-//}
+void List::displayList(void visit(Armors *)) const
+{
+	ListNode *pCur;  // To move through the list
+
+					 // print header
+	cout << endl<<endl;
+
+	pCur = head->next;          // Position pCur: skip the head of the list.
+	while (pCur != NULL)
+	{
+		visit(pCur->A);  //Display the value in the node.
+		pCur = pCur->next;    //Move to the next node.
+
+	}
+	cout
+		<< "==== ============================= ========= ==========" << endl;
+}
 
 //**************************************************
 // Destructor                                      *
